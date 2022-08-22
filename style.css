@@ -34,6 +34,7 @@ body {
 
 .long-quote {
   font-size: 2rem;
+  line-height: normal;
 }
 
 .fa-quote-left {

@@ -7,21 +7,20 @@ const loader = document.querySelector('#loader');
 
 let apiQuotes = [];
 
-// show loading 
-function loading() {
+function showLoadingSpinner() {
     loader.hidden = false;
     quoteContainer.hidden = true;
 }
 
-// Hide Loading 
-function complete() {
+ 
+function removeLoadingSpinner() {
     quoteContainer.hidden = false;
     loader.hidden = true;
 }
 
 // Show new quote
 function newQuote() {
-    loading();
+    showLoadingSpinner();
     // Check Quote Length 
     if (apiQuotes.content.length > 120) {
         quoteText.classList.add('long-quote');
@@ -31,13 +30,13 @@ function newQuote() {
     // Set Quote, Hide Loader
     authorText.textContent = apiQuotes.author;
     quoteText.textContent = apiQuotes.content;
-    complete();
+    removeLoadingSpinner();
 }
 
  
 // Get Ouotes from API
 async function getQuotes() {
-    loading();
+    showLoadingSpinner();
     const apiUrl = 'https://api.quotable.io/random';
     try {
         const response = await fetch(apiUrl);
