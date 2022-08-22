@@ -3,25 +3,41 @@ const quoteText = document.querySelector('#quote');
 const authorText = document.querySelector('#author');
 const twitterBtn = document.querySelector('#twitter');
 const newQuoteBtn = document.querySelector('#new-quote');
+const loader = document.querySelector('#loader');
 
 let apiQuotes = [];
 
+// show loading 
+function loading() {
+    loader.hidden = false;
+    quoteContainer.hidden = true;
+}
+
+// Hide Loading 
+function complete() {
+    quoteContainer.hidden = false;
+    loader.hidden = true;
+}
+
 // Show new quote
 function newQuote() {
+    loading();
+    // Check Quote Length 
+    if (apiQuotes.content.length > 120) {
+        quoteText.classList.add('long-quote');
+    } else {
+        quoteText.classList.remove('long-quote');
+    }
+    // Set Quote, Hide Loader
     authorText.textContent = apiQuotes.author;
-
-    // // Check Quote Length to determine styling 
-    // if (apiQuotes.text.length > 50) {
-    //     quoteText.classList.add('long-quote'); 
-    // } else {
-    //     quoteText.classList.remove('long-quote'); 
-    // }
     quoteText.textContent = apiQuotes.content;
+    complete();
 }
 
  
 // Get Ouotes from API
 async function getQuotes() {
+    loading();
     const apiUrl = 'https://api.quotable.io/random';
     try {
         const response = await fetch(apiUrl);
